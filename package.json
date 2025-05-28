@@ -1,0 +1,22 @@
+{
+  "name": "trt-quiz",
+  "version": "1.0.0",
+  "description": "A product quiz built with HTML, CSS, and vanilla JavaScript",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build step required for vanilla HTML/CSS/JS'",
+    "start": "echo 'Serving static files'"
+  },
+  "keywords": [
+    "quiz",
+    "product",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vercel": "^42.2.0"
+  }
+}
