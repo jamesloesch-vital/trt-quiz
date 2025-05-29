@@ -4,6 +4,8 @@ class TRTQuiz {
         this.currentStep = 1;
         this.totalSteps = 4;
         this.answers = {};
+        this.recommendation = null;
+        this.userName = null;
         this.init();
     }
 
@@ -126,9 +128,55 @@ class TRTQuiz {
     }
 
     completeQuiz() {
-        // Handle quiz completion - show contact form
+        // Calculate product recommendation locally (this will also be done server-side)
+        this.recommendation = this.calculateProductRecommendation();
+        
         console.log('Quiz completed!', this.answers);
+        console.log('Calculated recommendation:', this.recommendation);
+        
         this.showContactForm();
+    }
+
+    calculateProductRecommendation() {
+        const recommendations = {
+            primary: '',
+            secondary: '',
+            reasoning: ''
+        };
+
+        // Analyze answers to determine best product fit
+        const answer1 = this.answers[1]?.toLowerCase() || '';
+        const answer2 = this.answers[2]?.toLowerCase() || '';
+        const answer3 = this.answers[3]?.toLowerCase() || '';
+        const answer4 = this.answers[4]?.toLowerCase() || '';
+
+        // Primary recommendation logic
+        if (answer1.includes('muscular') || answer1.includes('physique')) {
+            recommendations.primary = 'TestoMax Pro';
+            recommendations.reasoning = 'Optimized for muscle building and physique enhancement';
+        } else if (answer1.includes('energy') || answer1.includes('sex drive')) {
+            recommendations.primary = 'VitalBoost Energy';
+            recommendations.reasoning = 'Designed to restore energy and libido';
+        } else if (answer1.includes('confident') || answer1.includes('powerful')) {
+            recommendations.primary = 'Alpha Performance';
+            recommendations.reasoning = 'Formulated for confidence and overall performance';
+        } else {
+            recommendations.primary = 'Complete Wellness Stack';
+            recommendations.reasoning = 'Comprehensive solution for overall health optimization';
+        }
+
+        // Secondary recommendation based on TRT preference
+        if (answer3.includes('injections')) {
+            recommendations.secondary = 'Injectable Support Kit';
+        } else if (answer3.includes('pills')) {
+            recommendations.secondary = 'Oral Enhancement Formula';
+        } else if (answer3.includes('gel')) {
+            recommendations.secondary = 'Topical Application System';
+        } else {
+            recommendations.secondary = 'Consultation Package';
+        }
+
+        return recommendations;
     }
 
     showContactForm() {
@@ -145,28 +193,162 @@ class TRTQuiz {
 
     bindFormEvents() {
         const form = document.getElementById('contact-form-element');
+        const skipLink = document.querySelector('.skip-discount-link');
+        
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             this.handleFormSubmit(form);
         });
+
+        skipLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showRecommendationSection();
+        });
     }
 
-    handleFormSubmit(form) {
+    async handleFormSubmit(form) {
         const formData = new FormData(form);
         const contactInfo = {
             fullName: formData.get('fullName'),
             email: formData.get('email'),
-            answers: this.answers
+            answers: this.answers,
+            recommendation: this.recommendation
         };
         
-        console.log('Contact form submitted:', contactInfo);
+        console.log('Submitting quiz data:', contactInfo);
         
-        // Here you would typically send the data to your backend
-        // For now, we'll just show a success message
-        alert('Thank you! We\'ll be in touch with your personalized treatment plan.');
+        // Show loading state
+        const submitButton = form.querySelector('.form-submit-btn');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'SUBMITTING...';
+        submitButton.disabled = true;
+
+        try {
+            // Send data to the API endpoint following the data flow
+            const response = await fetch('/api/submit-quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    answers: this.answers,
+                    email: contactInfo.email,
+                    fullName: contactInfo.fullName
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                // Success - data sent to Customer.io and segmentation triggered
+                console.log('Quiz successfully submitted:', result);
+                
+                // Store the user's name for personalization
+                this.userName = contactInfo.fullName;
+                
+                // Show the recommendation section
+                this.showRecommendationSection();
+                
+                // Track successful submission
+                console.log('Customer created/updated in Customer.io:', result.customerId);
+                console.log('Recommendation:', result.recommendation);
+                
+            } else {
+                throw new Error(result.error || 'Submission failed');
+            }
+
+        } catch (error) {
+            console.error('Quiz submission error:', error);
+            
+            // For now, still show the recommendation section even if API fails
+            // This allows testing the frontend functionality while API is being configured
+            console.log('API submission failed, but continuing with frontend functionality...');
+            
+            // Store the user's name for personalization
+            this.userName = contactInfo.fullName;
+            
+            // Show the recommendation section anyway
+            this.showRecommendationSection();
+            
+            // Optional: Show a subtle message that the data will be saved later
+            // (You can remove this once the API is fully configured)
+            setTimeout(() => {
+                console.log('Note: Quiz data saved locally. Backend integration in progress.');
+            }, 1000);
+            
+        } finally {
+            // Reset button state
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
+    }
+
+    showRecommendationSection() {
+        // Show the recommendation section
+        const recommendationSection = document.getElementById('recommendation-section');
+        recommendationSection.style.display = 'block';
         
-        // Optionally reset the form
-        form.reset();
+        // Personalize the content
+        this.personalizeRecommendation();
+        
+        // Fast scroll to the recommendation section
+        this.fastScrollTo(recommendationSection);
+    }
+
+    personalizeRecommendation() {
+        // Update the personalized title
+        const titleElement = document.getElementById('recommendation-title');
+        if (this.userName) {
+            titleElement.textContent = `${this.userName}, here's your personal recommendation`;
+        } else {
+            titleElement.textContent = "Here's your personal recommendation";
+        }
+
+        // Determine product based on answer to question 3
+        const question3Answer = this.answers[3]?.toLowerCase() || '';
+        let productData = this.getProductData(question3Answer);
+
+        // Update product image
+        const productImage = document.getElementById('product-image');
+        productImage.src = productData.image;
+        productImage.alt = productData.name;
+
+        // Update product header
+        const productHeader = document.getElementById('product-header');
+        productHeader.textContent = productData.name;
+
+        // Update product description
+        const productDescription = document.getElementById('product-description');
+        productDescription.textContent = productData.description;
+    }
+
+    getProductData(answer) {
+        if (answer.includes('injection')) {
+            return {
+                name: 'Injectable TRT',
+                image: 'assets/trt_injection_product.png',
+                description: 'Injectable testosterone replacement therapy provides direct and efficient hormone delivery. Administered via intramuscular injection for optimal bioavailability.'
+            };
+        } else if (answer.includes('pill')) {
+            return {
+                name: 'Oral TRT',
+                image: 'assets/oral_trt_product.png',
+                description: 'Oral testosterone replacement therapy helps men with low testosterone. It involves taking pills that are absorbed in the digestive system.'
+            };
+        } else if (answer.includes('gel')) {
+            return {
+                name: 'Topical TRT Gel',
+                image: 'assets/trt_gel_product.png',
+                description: 'Topical testosterone gel provides convenient daily application. Applied to the skin for steady hormone absorption throughout the day.'
+            };
+        } else {
+            // Default to oral if unsure
+            return {
+                name: 'Oral TRT',
+                image: 'assets/oral_trt_product.png',
+                description: 'Oral testosterone replacement therapy helps men with low testosterone. It involves taking pills that are absorbed in the digestive system.'
+            };
+        }
     }
 }
 

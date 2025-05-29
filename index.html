@@ -133,13 +133,78 @@
         <div class="contact-form-container">
             <h1 class="contact-form-header">Great news!</h1>
             <p class="contact-form-subtext">We've got a treatment plan for you.</p>
-            <p class="contact-form-description">Sign up to view the best products suited for you</p>
+            <p class="contact-form-description">Want 10% off your first month's supply? Just leave your name and email, and we'll send you a discount code.</p>
             
             <form class="contact-form" id="contact-form-element">
                 <input type="text" name="fullName" placeholder="Full Name" class="form-input" required>
                 <input type="email" name="email" placeholder="Email" class="form-input" required>
-                <button type="submit" class="form-submit-btn">SIGN UP</button>
+                <button type="submit" class="form-submit-btn">Get 10% off</button>
             </form>
+            
+            <a href="#" class="skip-discount-link">No thanks, I'll pay full price</a>
+        </div>
+    </section>
+
+    <!-- Recommendation Section -->
+    <section class="recommendation-section" id="recommendation-section">
+        <div class="recommendation-container">
+            <!-- Personalized Header -->
+            <div class="recommendation-header">
+                <p class="recommendation-preview-text">Treatment Preview</p>
+                <h1 class="recommendation-title" id="recommendation-title">Here's your personal recommendation</h1>
+            </div>
+
+            <!-- Product Showcase -->
+            <div class="product-showcase">
+                <!-- Product Image Container -->
+                <div class="product-image-container">
+                    <img src="assets/trt_injection_product.png" alt="Recommended TRT Product" class="product-image" id="product-image">
+                </div>
+
+                <!-- Product Details -->
+                <div class="product-details">
+                    <div class="product-info">
+                        <h2 class="product-header" id="product-header">Oral TRT</h2>
+                        <p class="product-description" id="product-description">Oral testosterone replacement therapy helps men with low testosterone. It involves taking pills that are absorbed in the digestive system.</p>
+                        
+                        <!-- Benefits List -->
+                        <div class="benefits-list">
+                            <div class="benefit-item">
+                                <img src="assets/checkmark.png" alt="Checkmark" class="benefit-icon">
+                                <span class="benefit-text">Clinically proven formula</span>
+                            </div>
+                            <div class="benefit-item">
+                                <img src="assets/checkmark.png" alt="Checkmark" class="benefit-icon">
+                                <span class="benefit-text">Clinically proven formula</span>
+                            </div>
+                            <div class="benefit-item">
+                                <img src="assets/checkmark.png" alt="Checkmark" class="benefit-icon">
+                                <span class="benefit-text">Clinically proven formula</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Cards -->
+                    <div class="pricing-section">
+                        <div class="pricing-card">
+                            <p class="pricing-label">Initial lab test & doctor visit</p>
+                            <p class="pricing-amount">$95</p>
+                            <p class="pricing-note">One time payment applied to your first month</p>
+                        </div>
+                        <div class="pricing-card">
+                            <p class="pricing-label">Monthly Treatment</p>
+                            <p class="pricing-amount">$104 <span class="pricing-period">/ first month</span></p>
+                            <p class="pricing-note">One time payment applied to your first month</p>
+                        </div>
+                    </div>
+
+                    <!-- More Info Link -->
+                    <a href="#" class="more-info-link">More info on pricing</a>
+
+                    <!-- CTA Button -->
+                    <button class="cta-button" id="buy-now-btn">BUY NOW</button>
+                </div>
+            </div>
         </div>
     </section>
 

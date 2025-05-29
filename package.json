@@ -16,6 +16,9 @@
   ],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "customerio-node": "^5.0.0"
+  },
   "devDependencies": {
     "vercel": "^42.2.0"
   }
