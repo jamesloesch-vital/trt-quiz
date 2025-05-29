@@ -288,11 +288,63 @@ class TRTQuiz {
         const recommendationSection = document.getElementById('recommendation-section');
         recommendationSection.style.display = 'block';
         
+        // Show the user goals section
+        const userGoalsSection = document.getElementById('user-goals-section');
+        userGoalsSection.style.display = 'block';
+        
+        // Show the comparison chart section
+        const comparisonChartSection = document.getElementById('comparison-chart-section');
+        comparisonChartSection.style.display = 'block';
+        
         // Personalize the content
         this.personalizeRecommendation();
+        this.personalizeUserGoals();
         
         // Fast scroll to the recommendation section
         this.fastScrollTo(recommendationSection);
+    }
+
+    personalizeUserGoals() {
+        // Update the personalized header with user name
+        const headerElement = document.getElementById('user-goals-header');
+        if (this.userName) {
+            const firstName = this.userName.split(' ')[0];
+            headerElement.textContent = `${firstName}, based on your goals:`;
+        } else {
+            headerElement.textContent = "Josh, based on your goals:";
+        }
+
+        // Populate the goal items with answers from questions 1, 2, and 4
+        const goal1Element = document.getElementById('goal-1');
+        const goal2Element = document.getElementById('goal-2');
+        const goal4Element = document.getElementById('goal-4');
+
+        if (this.answers[1]) {
+            goal1Element.textContent = this.answers[1];
+        }
+        if (this.answers[2]) {
+            goal2Element.textContent = this.answers[2];
+        }
+        if (this.answers[4]) {
+            goal4Element.textContent = this.answers[4];
+        }
+
+        // Personalize the benefits section
+        this.personalizeBenefitsSection();
+    }
+
+    personalizeBenefitsSection() {
+        // Determine product based on answer to question 3
+        const question3Answer = this.answers[3]?.toLowerCase() || '';
+        let productData = this.getProductData(question3Answer);
+
+        // Update benefits product name
+        const benefitsProductName = document.getElementById('benefits-product-name');
+        benefitsProductName.textContent = productData.name;
+
+        // Update benefits recommendation text
+        const benefitsRecommendationText = document.getElementById('benefits-recommendation-text');
+        benefitsRecommendationText.textContent = productData.description;
     }
 
     personalizeRecommendation() {
