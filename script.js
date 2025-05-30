@@ -296,6 +296,14 @@ class TRTQuiz {
         const comparisonChartSection = document.getElementById('comparison-chart-section');
         comparisonChartSection.style.display = 'block';
         
+        // Show the process section
+        const processSection = document.getElementById('process-section');
+        processSection.style.display = 'block';
+        
+        // Show the testimonials section
+        const testimonialsSection = document.getElementById('testimonials-section');
+        testimonialsSection.style.display = 'block';
+        
         // Personalize the content
         this.personalizeRecommendation();
         this.personalizeUserGoals();
@@ -404,9 +412,154 @@ class TRTQuiz {
     }
 }
 
-// Initialize quiz when page loads
-document.addEventListener('DOMContentLoaded', () => {
+// Testimonials Carousel functionality
+class TestimonialsCarousel {
+    constructor() {
+        this.currentSlide = 0;
+        this.totalSlides = 4;
+        this.isScrolling = false;
+        this.autoScrollInterval = null;
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.startAutoScroll();
+    }
+
+    bindEvents() {
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const dots = document.querySelectorAll('.dot');
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => this.prevSlide());
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => this.nextSlide());
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        // Pause auto-scroll on hover
+        const carousel = document.querySelector('.testimonials-carousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => this.pauseAutoScroll());
+            carousel.addEventListener('mouseleave', () => this.startAutoScroll());
+        }
+
+        // Handle touch events for mobile swipe
+        this.bindTouchEvents();
+    }
+
+    bindTouchEvents() {
+        const track = document.querySelector('.testimonials-track');
+        if (!track) return;
+
+        let startX = 0;
+        let endX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        track.addEventListener('touchmove', (e) => {
+            endX = e.touches[0].clientX;
+        });
+
+        track.addEventListener('touchend', () => {
+            const threshold = 50; // Minimum swipe distance
+            const diff = startX - endX;
+
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    this.nextSlide(); // Swipe left - go to next
+                } else {
+                    this.prevSlide(); // Swipe right - go to previous
+                }
+            }
+        });
+    }
+
+    nextSlide() {
+        if (this.isScrolling) return;
+        
+        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.updateCarousel();
+    }
+
+    prevSlide() {
+        if (this.isScrolling) return;
+        
+        this.currentSlide = this.currentSlide === 0 ? this.totalSlides - 1 : this.currentSlide - 1;
+        this.updateCarousel();
+    }
+
+    goToSlide(slideIndex) {
+        if (this.isScrolling || slideIndex === this.currentSlide) return;
+        
+        this.currentSlide = slideIndex;
+        this.updateCarousel();
+    }
+
+    updateCarousel() {
+        const track = document.querySelector('.testimonials-track');
+        const dots = document.querySelectorAll('.dot');
+        
+        if (!track) return;
+
+        this.isScrolling = true;
+
+        // Calculate the transform value
+        // Each card is 928px wide + 2rem gap (32px) = 960px total
+        const cardWidth = 928;
+        const gap = 32;
+        const slideWidth = cardWidth + gap;
+        const translateX = -this.currentSlide * slideWidth;
+
+        // Apply smooth transform
+        track.style.transform = `translateX(${translateX}px)`;
+
+        // Update active dot
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentSlide);
+        });
+
+        // Reset scrolling flag after animation completes
+        setTimeout(() => {
+            this.isScrolling = false;
+        }, 500);
+
+        // Restart auto-scroll
+        this.restartAutoScroll();
+    }
+
+    startAutoScroll() {
+        this.autoScrollInterval = setInterval(() => {
+            this.nextSlide();
+        }, 5000); // Change slide every 5 seconds
+    }
+
+    pauseAutoScroll() {
+        if (this.autoScrollInterval) {
+            clearInterval(this.autoScrollInterval);
+            this.autoScrollInterval = null;
+        }
+    }
+
+    restartAutoScroll() {
+        this.pauseAutoScroll();
+        this.startAutoScroll();
+    }
+}
+
+// Initialize the quiz and testimonials carousel when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
     new TRTQuiz();
+    new TestimonialsCarousel();
 });
 
 // Add selected state styles

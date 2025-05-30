@@ -776,14 +776,120 @@ html {
 /* Comparison Chart Section */
 .comparison-chart-section {
     background-color: #FAFAF5;
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     margin: 0;
     display: none; /* Initially hidden */
 }
 
 .comparison-chart-container {
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1309px;
+    height: 666px;
+    background: linear-gradient(135deg, #9A805B 0%, #5B421F 100%);
+    border-radius: 40px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 60px;
+    min-width: 800px;
+}
+
+.dividers-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 500px;
+    flex-shrink: 0;
+    flex: 0 0 auto;
+    margin-left: -30px;
+}
+
+.divider-text-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.divider-header {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin-top: 18px;
+    margin-bottom: 13px;
+    line-height: 1.0;
+    max-width: 249px;
+}
+
+.divider-paragraph {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFFFFF;
+    opacity: 0.6;
+    margin-bottom: 18px;
+    line-height: 1.1;
+    max-width: 249px;
+}
+
+.comparison-divider {
+    width: min(286px, 20vw);
+    height: 2px;
+    background-color: #FFFFFF;
+    opacity: 0.2;
+}
+
+.columns-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex: 1;
+    min-width: 0;
+    padding-right: 0;
+    margin-right: -30px;
+}
+
+.comparison-column-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 288px;
+}
+
+.comparison-column-header {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.comparison-column {
+    width: 100%;
+    max-width: 288px;
+    height: 550px;
+    background-color: #FAFAF5;
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 76px;
+}
+
+.column-divider {
+    width: 217px;
+    height: 2px;
+    background-color: #CCCCCC;
+    margin-bottom: 125px;
+}
+
+.column-divider:last-child {
+    margin-bottom: 0;
 }
 
 .comparison-chart-title {
@@ -792,7 +898,7 @@ html {
     font-weight: 500;
     color: #2C2C2C;
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .comparison-table {
@@ -805,18 +911,18 @@ html {
 .comparison-header {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 1px;
+    gap: 3px;
     background: linear-gradient(135deg, #9A805B 0%, #5B421F 100%);
 }
 
 .feature-column-header {
     background: linear-gradient(135deg, #9A805B 0%, #5B421F 100%);
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
 }
 
 .option-column-header {
     background-color: #FAFAF5;
-    padding: 1.5rem;
+    padding: 2rem 2rem;
     text-align: center;
     font-family: 'LT Superior', sans-serif;
     font-size: 20px;
@@ -828,14 +934,14 @@ html {
 .comparison-row {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 1px;
+    gap: 3px;
     background: linear-gradient(135deg, #9A805B 0%, #5B421F 100%);
-    border-top: 1px solid transparent;
+    border-top: 3px solid transparent;
 }
 
 .feature-cell {
     background: linear-gradient(135deg, #9A805B 0%, #5B421F 100%);
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -846,7 +952,7 @@ html {
     font-size: 18px;
     font-weight: 600;
     color: #FAFAF5;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     line-height: 1.3;
 }
 
@@ -861,16 +967,16 @@ html {
 
 .comparison-cell {
     background-color: #FAFAF5;
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100px;
+    min-height: 120px;
 }
 
 .comparison-icon {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
 }
 
 /* Last row bottom border radius */
@@ -1063,22 +1169,67 @@ html {
     
     /* Comparison Chart Mobile */
     .comparison-chart-section {
-        padding: 2rem 1rem;
+        padding: 3rem 1rem;
+    }
+    
+    .comparison-chart-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 300px;
+        height: auto;
+        min-height: 400px;
+        padding: 20px;
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .dividers-section {
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+        height: auto;
+    }
+    
+    .comparison-divider {
+        width: 2px;
+        height: 60px;
+        width: min(60px, 15vw);
+        height: 2px;
+    }
+    
+    .columns-section {
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .comparison-column-wrapper {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .comparison-column {
+        height: 300px;
+    }
+    
+    .comparison-column-header {
+        font-size: 24px;
+        margin-bottom: 15px;
     }
     
     .comparison-chart-title {
         font-size: 28px;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
     }
     
     .comparison-header,
     .comparison-row {
         grid-template-columns: 1.5fr 1fr 1fr 1fr;
-        gap: 0.5px;
+        gap: 2px;
     }
     
     .feature-cell {
-        padding: 1.5rem 1rem;
+        padding: 2rem 1.25rem;
     }
     
     .feature-title {
@@ -1090,18 +1241,18 @@ html {
     }
     
     .comparison-cell {
-        padding: 1.5rem 0.75rem;
-        min-height: 80px;
+        padding: 2rem 1rem;
+        min-height: 100px;
     }
     
     .option-column-header {
-        padding: 1rem;
+        padding: 1.5rem 1rem;
         font-size: 16px;
     }
     
     .comparison-icon {
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
     }
 }
 
@@ -1245,26 +1396,27 @@ html {
     
     /* Comparison Chart Small Mobile */
     .comparison-chart-section {
-        padding: 1.5rem 0.75rem;
+        padding: 2rem 1rem;
     }
     
     .comparison-chart-title {
         font-size: 24px;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
     
     .comparison-header,
     .comparison-row {
         grid-template-columns: 1fr 0.8fr 0.8fr 0.8fr;
+        gap: 2px;
     }
     
     .feature-cell {
-        padding: 1rem 0.75rem;
+        padding: 1.5rem 1rem;
     }
     
     .feature-title {
         font-size: 14px;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
     }
     
     .feature-description {
@@ -1272,17 +1424,487 @@ html {
     }
     
     .comparison-cell {
-        padding: 1rem 0.5rem;
-        min-height: 60px;
+        padding: 1.5rem 0.75rem;
+        min-height: 80px;
     }
     
     .option-column-header {
-        padding: 0.75rem 0.5rem;
+        padding: 1rem 0.75rem;
         font-size: 14px;
     }
     
     .comparison-icon {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Process Section */
+.process-section {
+    background-color: #EAEAE1;
+    padding: 80px 2rem;
+    display: none; /* Initially hidden like other sections */
+}
+
+.process-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.process-header {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 38px;
+    font-weight: 500;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.process-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.process-card {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.process-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.process-card-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.process-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.process-number-icon {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 40px;
+    height: 40px;
+    background-color: #FAFAF5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.process-number {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.process-card-content {
+    background-color: #FAFAF5;
+    padding: 24px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.process-card-title {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 38px;
+    font-weight: 500;
+    color: #000000;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.process-card-description {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+}
+
+/* Responsive Design for Process Section */
+@media (max-width: 1024px) {
+    .process-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    
+    .process-card-title {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .process-section {
+        padding: 60px 1rem;
+    }
+    
+    .process-header {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+    
+    .process-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .process-card-content {
+        padding: 20px;
+        height: auto;
+        min-height: 180px;
+    }
+    
+    .process-card-title {
+        font-size: 28px;
+    }
+    
+    .process-card-description {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .process-section {
+        padding: 40px 1rem;
+    }
+    
+    .process-header {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    
+    .process-card-image-container {
+        height: 160px;
+    }
+    
+    .process-card-content {
+        padding: 16px;
+        min-height: 160px;
+    }
+    
+    .process-card-title {
+        font-size: 24px;
+    }
+    
+    .process-card-description {
+        font-size: 12px;
+    }
+    
+    .process-number-icon {
+        width: 36px;
+        height: 36px;
+        top: 12px;
+        left: 12px;
+    }
+    
+    .process-number {
+        font-size: 14px;
+    }
+}
+
+/* Testimonials Carousel Section */
+.testimonials-section {
+    background-color: #FAFAF5;
+    padding: 4rem 2rem;
+    overflow: hidden;
+    display: none; /* Initially hidden like other sections */
+}
+
+.testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonials-header {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: #2C2C2C;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.testimonials-carousel {
+    position: relative;
+    width: 100%;
+}
+
+.testimonials-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background-color: #9C7F56;
+    width: 928px;
+    height: 370px;
+    border-radius: 16px;
+    flex-shrink: 0;
+    position: relative;
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.quotes-icon {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 2;
+}
+
+.quote-svg {
+    width: 48px;
+    height: auto;
+    filter: brightness(0) invert(1); /* Make quotes white */
+}
+
+.testimonial-content {
+    display: flex;
+    height: 100%;
+    gap: 2rem;
+    align-items: center;
+}
+
+.testimonial-image {
+    width: 294px;
+    height: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.testimonial-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 403px;
+}
+
+.testimonial-text {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    max-width: 403px;
+}
+
+.testimonial-author {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.testimonial-title {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Carousel Navigation */
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.carousel-btn {
+    background-color: #9C7F56;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.carousel-btn:hover {
+    background-color: #8A6D47;
+    transform: scale(1.05);
+}
+
+.carousel-btn:active {
+    transform: scale(0.95);
+}
+
+.carousel-dots {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #CCCCCC;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background-color: #9C7F56;
+    transform: scale(1.2);
+}
+
+.dot:hover {
+    background-color: #9C7F56;
+}
+
+/* Responsive Design for Testimonials */
+@media (max-width: 1024px) {
+    .testimonials-carousel {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .testimonials-carousel::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .testimonials-track {
+        scroll-snap-type: x mandatory;
+    }
+    
+    .testimonial-card {
+        scroll-snap-align: center;
+        width: 90vw;
+        max-width: 800px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonials-section {
+        padding: 3rem 1rem;
+    }
+    
+    .testimonials-header {
+        font-size: 28px;
+        margin-bottom: 2rem;
+    }
+    
+    .testimonial-card {
+        width: 90vw;
+        height: auto;
+        min-height: 400px;
+        padding: 1.5rem;
+    }
+    
+    .testimonial-content {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .testimonial-image {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+    
+    .testimonial-text-content {
+        text-align: center;
+        max-width: 100%;
+    }
+    
+    .testimonial-text {
+        font-size: 15px;
+        margin-bottom: 1.5rem;
+        max-width: 100%;
+    }
+    
+    .quotes-icon {
+        top: 1.5rem;
+        right: 1.5rem;
+    }
+    
+    .quote-svg {
+        width: 36px;
+    }
+    
+    .carousel-nav {
+        margin-top: 2rem;
+        gap: 1.5rem;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonials-section {
+        padding: 2rem 1rem;
+    }
+    
+    .testimonials-header {
+        font-size: 24px;
+    }
+    
+    .testimonial-card {
+        width: 95vw;
+        min-height: 350px;
+        padding: 1rem;
+    }
+    
+    .testimonial-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .testimonial-text {
+        font-size: 14px;
+    }
+    
+    .testimonial-author {
+        font-size: 12px;
+    }
+    
+    .testimonial-title {
+        font-size: 12px;
     }
 } 
