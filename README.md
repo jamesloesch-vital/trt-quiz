@@ -69,6 +69,7 @@ Secondary recommendations based on TRT delivery preference (injections, pills, g
 - **LegitScript Certification** - Add LegitScript cert JS snippet
 - **Meta Pixel** - Implement Facebook/Meta Pixel tracking  
 - **PostHog Integration** - Add analytics and user behavior tracking
+- **LP Button Click Tracking** - Set up custom Facebook event tracking for campaigns 
 
 ## Tech Stack
 

@@ -27,6 +27,10 @@ function calculateProductRecommendation(answers) {
         recommendations.primary = 'Topical Application System';
         recommendations.reasoning = 'Formulated for topical TRT application';
         recommendations.secondary = 'Consultation Package';
+    } else if (answer3.includes('not sure')) {
+        recommendations.primary = 'Custom Plan';
+        recommendations.reasoning = 'Personalized approach to determine the best TRT method for your needs';
+        recommendations.secondary = 'Comprehensive Consultation';
     } else {
         recommendations.primary = 'Consultation Package';
         recommendations.reasoning = 'Comprehensive consultation to determine best TRT approach';

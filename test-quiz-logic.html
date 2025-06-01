@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Logic Test</title>
+</head>
+<body>
+    <h1>Quiz Logic Test</h1>
+    <p>Testing the getProductData function with different answers:</p>
+    
+    <div id="test-results"></div>
+
+    <script>
+        // Copy the getProductData function for testing
+        function getProductData(answer) {
+            if (answer.includes('injection')) {
+                return {
+                    name: 'Injectable TRT',
+                    image: 'assets/trt_injection_product.png',
+                    description: 'Injectable testosterone replacement therapy provides direct and efficient hormone delivery. Administered via intramuscular injection for optimal bioavailability.'
+                };
+            } else if (answer.includes('pill')) {
+                return {
+                    name: 'Oral TRT',
+                    image: 'assets/oral_trt_product.png',
+                    description: 'Oral testosterone replacement therapy helps men with low testosterone. It involves taking pills that are absorbed in the digestive system.'
+                };
+            } else if (answer.includes('gel')) {
+                return {
+                    name: 'Topical TRT Gel',
+                    image: 'assets/trt_gel_product.png',
+                    description: 'Topical testosterone gel provides convenient daily application. Applied to the skin for steady hormone absorption throughout the day.'
+                };
+            } else if (answer.includes('not sure')) {
+                return {
+                    name: 'Custom Plan',
+                    image: 'assets/product-group.png',
+                    description: 'A personalized testosterone replacement therapy plan tailored to your specific needs and preferences. Our medical team will work with you to determine the best approach.'
+                };
+            } else {
+                // Default to oral if unsure
+                return {
+                    name: 'Oral TRT',
+                    image: 'assets/oral_trt_product.png',
+                    description: 'Oral testosterone replacement therapy helps men with low testosterone. It involves taking pills that are absorbed in the digestive system.'
+                };
+            }
+        }
+
+        // Test cases
+        const testCases = [
+            "Injections",
+            "Pills", 
+            "Gel",
+            "I'm not sure",
+            "something else"
+        ];
+
+        let results = '<ul>';
+        testCases.forEach(testCase => {
+            const lowerCase = testCase.toLowerCase();
+            const result = getProductData(lowerCase);
+            results += `<li><strong>${testCase}</strong> → ${result.name} (${result.image})</li>`;
+        });
+        results += '</ul>';
+
+        document.getElementById('test-results').innerHTML = results;
+    </script>
+</body>
+</html> 
