@@ -417,25 +417,25 @@ class TRTQuiz {
             return {
                 name: 'Injectable TRT',
                 image: 'assets/trt_injection_product.png',
-                description: 'Injectable testosterone replacement therapy provides direct and efficient hormone delivery. Administered via intramuscular injection for optimal bioavailability.'
+                description: 'It provides the most direct and efficient hormone delivery. Administered via intramuscular injection for optimal bioavailability.'
             };
         } else if (answer.includes('pill')) {
             return {
                 name: 'Oral TRT',
                 image: 'assets/oral_trt_product.png',
-                description: 'Oral testosterone replacement therapy helps men with low testosterone. It involves taking pills that are absorbed in the digestive system.'
+                description: 'It is a safe, easy, daily pill that delivers bio-identical testosterone to help you effectively boost your testosterone levels. '
             };
         } else if (answer.includes('gel')) {
             return {
                 name: 'Topical TRT Gel',
                 image: 'assets/trt_gel_product.png',
-                description: 'Topical testosterone gel provides convenient daily application. Applied to the skin for steady hormone absorption throughout the day.'
+                description: 'It provides convenient daily application and a powerful testosterone boost. Applied to the skin for steady hormone absorption throughout the day.'
             };
         } else if (answer.includes('not sure')) {
             return {
                 name: 'Custom Plan',
                 image: 'assets/product-group.png',
-                description: 'A personalized testosterone replacement therapy plan tailored to your specific needs and preferences. Our medical team will work with you to determine the best approach.'
+                description: 'Our medical team can create a custom plan tailored to your specific needs and preferences. They will work with you to determine the best approach, based on your biomarkers, medical history, and personal preference.'
             };
         } else {
             // Default to oral if unsure
@@ -584,10 +584,40 @@ class TRTQuiz {
                     question: "Do you accept insurance?",
                     answer: "No, we do not accept insurance. We are a cash-based practice."
                 }
+            ],
+            unsure: [
+                {
+                    question: "Do you take insurance?",
+                    answer: "No, we are a cash-based practice"
+                },
+                {
+                    question: "What TRT options do you provide?",
+                    answer: "We provide several TRT options, including injections, pills, and gel. Your doctor will determine the most effective treatment option for you"
+                },
+                {
+                    question: "What am I paying $95 today for?",
+                    answer: "The $95 paid today covers your lab test and first doctor visit. After you labs come in and you meet with the doctor, a treatment plan will be created for you, if appropriate. The $95 will be applied to the first month of whichever treatment option you're prescribed."
+                },
+                {
+                    question: "Where can I get my labs done?",
+                    answer: "Labs can be done at your nearest Labcorp or Quest Diagnostics location. Whichever is most convenient for you!"
+                },
+                {
+                    question: "How long does it take for lab results to come back?",
+                    answer: "Lab result times vary by Labcorp or Quest Diagnostics location, but typically results are returned within 24-48 hours."
+                },
+                {
+                    question: "What happens if I don't get prescribed TRT?",
+                    answer: "All prescriptions are issued by our licensed medical doctors using their professional medical discretion. If you do not receive a prescription, that is their expert decision, which will be fully explained to you during your first visit if this is the case."
+                },
+                {
+                    question: "What happens if I want to switch to a new medication after starting on a different one?",
+                    answer: "During follow up visits or through our support channel, you can request to switch medications. This decision will ultimately be made by the physician responsible for your care."
+                }
             ]
         };
 
-        // Default/I'm not sure - use gel FAQs as default
+        // Return specific FAQ data based on product type
         return faqData[productType] || faqData.gel;
     }
 
@@ -596,7 +626,9 @@ class TRTQuiz {
         const question3Answer = this.answers[3]?.toLowerCase() || '';
         let productType = 'gel'; // default
         
-        if (question3Answer.includes('injection')) {
+        if (question3Answer.includes('not sure')) {
+            productType = 'unsure';
+        } else if (question3Answer.includes('injection')) {
             productType = 'injection';
         } else if (question3Answer.includes('pill')) {
             productType = 'pills';
