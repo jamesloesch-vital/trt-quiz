@@ -1091,14 +1091,118 @@ function initializeFAQ() {
     });
 }
 
-// Initialize everything when DOM is loaded
+// Facebook Pixel Event Tracking
+class FacebookPixelTracker {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.bindCTAEvents();
+            });
+        } else {
+            this.bindCTAEvents();
+        }
+    }
+
+    bindCTAEvents() {
+        // Track "BUY NOW" button clicks
+        const buyNowBtn = document.getElementById('buy-now-btn');
+        if (buyNowBtn) {
+            buyNowBtn.addEventListener('click', () => {
+                this.trackCTAClick('BuyNow', 'buy-now-button');
+            });
+        }
+
+        // Track "START MY TREATMENT" button clicks
+        const startTreatmentBtn = document.getElementById('comparison-cta-btn');
+        if (startTreatmentBtn) {
+            startTreatmentBtn.addEventListener('click', () => {
+                this.trackCTAClick('StartTreatment', 'start-treatment-button');
+            });
+        }
+
+        // Track form submission as Lead event
+        const contactForm = document.getElementById('contact-form-element');
+        if (contactForm) {
+            contactForm.addEventListener('submit', () => {
+                this.trackFormSubmission();
+            });
+        }
+    }
+
+    trackCTAClick(eventName, buttonId) {
+        // Check if fbq is available (Meta Pixel loaded)
+        if (typeof fbq !== 'undefined') {
+            // Track as Lead event (standard Facebook event)
+            fbq('track', 'Lead', {
+                content_name: eventName,
+                content_category: 'TRT_CTA',
+                source: buttonId,
+                value: 95.00, // Initial consultation value
+                currency: 'USD'
+            });
+
+            // Also track as custom event for more granular tracking
+            fbq('trackCustom', eventName, {
+                button_id: buttonId,
+                page_section: this.getPageSection(buttonId),
+                timestamp: new Date().toISOString()
+            });
+
+            console.log(`Facebook Pixel: Tracked ${eventName} click`);
+        } else {
+            console.warn('Facebook Pixel not loaded - unable to track event');
+        }
+    }
+
+    trackFormSubmission() {
+        if (typeof fbq !== 'undefined') {
+            // Track form submission as Lead event
+            fbq('track', 'Lead', {
+                content_name: 'ContactFormSubmission',
+                content_category: 'TRT_Lead',
+                source: 'contact-form',
+                value: 95.00,
+                currency: 'USD'
+            });
+
+            // Custom event for form submission
+            fbq('trackCustom', 'FormSubmission', {
+                form_type: 'contact_form',
+                lead_type: 'trt_consultation',
+                timestamp: new Date().toISOString()
+            });
+
+            console.log('Facebook Pixel: Tracked form submission');
+        }
+    }
+
+    getPageSection(buttonId) {
+        switch(buttonId) {
+            case 'buy-now-button':
+                return 'recommendation_section';
+            case 'start-treatment-button':
+                return 'comparison_section';
+            default:
+                return 'unknown';
+        }
+    }
+}
+
+// Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    const quiz = new TRTQuiz();
-    const carousel = new TestimonialsCarousel();
-    const pricingModal = new PricingModal();
+    // Initialize existing functionality
+    window.quiz = new TRTQuiz();
+    window.carousel = new TestimonialsCarousel();
+    window.pricingModal = new PricingModal();
+    window.pricingModal.setQuiz(window.quiz);
     
-    // Connect the quiz with the pricing modal
-    pricingModal.setQuiz(quiz);
+    // Initialize Facebook Pixel tracking
+    window.facebookTracker = new FacebookPixelTracker();
     
     initializeFAQ();
 });
