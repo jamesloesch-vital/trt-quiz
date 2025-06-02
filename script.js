@@ -144,40 +144,25 @@ class TRTQuiz {
     calculateProductRecommendation() {
         const recommendations = {
             primary: '',
-            secondary: '',
             reasoning: ''
         };
 
-        // Analyze answers to determine best product fit
-        const answer1 = this.answers[1]?.toLowerCase() || '';
-        const answer2 = this.answers[2]?.toLowerCase() || '';
+        // Analyze answer to question 3 (TRT preference) to determine treatment type
         const answer3 = this.answers[3]?.toLowerCase() || '';
-        const answer4 = this.answers[4]?.toLowerCase() || '';
 
-        // Primary recommendation logic
-        if (answer1.includes('muscular') || answer1.includes('physique')) {
-            recommendations.primary = 'TestoMax Pro';
-            recommendations.reasoning = 'Optimized for muscle building and physique enhancement';
-        } else if (answer1.includes('energy') || answer1.includes('sex drive')) {
-            recommendations.primary = 'VitalBoost Energy';
-            recommendations.reasoning = 'Designed to restore energy and libido';
-        } else if (answer1.includes('confident') || answer1.includes('powerful')) {
-            recommendations.primary = 'Alpha Performance';
-            recommendations.reasoning = 'Formulated for confidence and overall performance';
-        } else {
-            recommendations.primary = 'Complete Wellness Stack';
-            recommendations.reasoning = 'Comprehensive solution for overall health optimization';
-        }
-
-        // Secondary recommendation based on TRT preference
+        // Recommendation based on TRT preference
         if (answer3.includes('injections')) {
-            recommendations.secondary = 'Injectable Support Kit';
+            recommendations.primary = 'Injectable TRT';
+            recommendations.reasoning = 'Based on your preference for injections';
         } else if (answer3.includes('pills')) {
-            recommendations.secondary = 'Oral Enhancement Formula';
+            recommendations.primary = 'Oral TRT';
+            recommendations.reasoning = 'Based on your preference for pills';
         } else if (answer3.includes('gel')) {
-            recommendations.secondary = 'Topical Application System';
+            recommendations.primary = 'Gel TRT';
+            recommendations.reasoning = 'Based on your preference for gel';
         } else {
-            recommendations.secondary = 'Consultation Package';
+            recommendations.primary = 'Custom Plan';
+            recommendations.reasoning = 'Our medical team will determine the best treatment option for you';
         }
 
         return recommendations;
@@ -243,7 +228,6 @@ class TRTQuiz {
                     quiz_answer_5: this.answers[5] || '',
                     // Recommendations
                     primary_product_recommendation: this.recommendation.primary,
-                    secondary_product_recommendation: this.recommendation.secondary,
                     recommendation_reasoning: this.recommendation.reasoning,
                     // Metadata
                     quiz_completed_at: new Date().toISOString(),
@@ -255,7 +239,6 @@ class TRTQuiz {
                 _cio.track('quiz_completed', {
                     quiz_type: 'trt_assessment',
                     primary_recommendation: this.recommendation.primary,
-                    secondary_recommendation: this.recommendation.secondary,
                     total_questions: 5,
                     completed_at: new Date().toISOString()
                 });
