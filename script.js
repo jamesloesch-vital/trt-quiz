@@ -1091,19 +1091,26 @@ class FacebookPixelTracker {
     }
 
     bindCTAEvents() {
-        // Track "BUY NOW" button clicks
+        // The Tellescope form URL for all CTA buttons
+        const tellescapeFormUrl = 'https://business.tellescope.com/e/public/form?f=68279be5ed24a991a4220f2e&businessId=67ab79f02cadd94416b434bb&nextFormId=&publicIdentifier=&customTypeId=&orgIds=&skipMatch=false&autoStart=false&sessionId=&';
+        
+        // Track "BUY NOW" button clicks and redirect
         const buyNowBtn = document.getElementById('buy-now-btn');
         if (buyNowBtn) {
             buyNowBtn.addEventListener('click', () => {
                 this.trackCTAClick('BuyNow', 'buy-now-button');
+                // Redirect to Tellescope form
+                window.open(tellescapeFormUrl, '_blank');
             });
         }
 
-        // Track "START MY TREATMENT" button clicks
+        // Track "START MY TREATMENT" button clicks and redirect
         const startTreatmentBtn = document.getElementById('comparison-cta-btn');
         if (startTreatmentBtn) {
             startTreatmentBtn.addEventListener('click', () => {
                 this.trackCTAClick('StartTreatment', 'start-treatment-button');
+                // Redirect to Tellescope form
+                window.open(tellescapeFormUrl, '_blank');
             });
         }
 
