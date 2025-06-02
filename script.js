@@ -228,24 +228,39 @@ class TRTQuiz {
         submitButton.disabled = true;
 
         try {
-            // Send data to the API endpoint following the data flow
-            const response = await fetch('/api/submit-quiz', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    answers: this.answers,
+            // Send directly to Customer.io using their JavaScript SDK
+            if (typeof _cio !== 'undefined') {
+                // Identify the customer
+                _cio.identify({
+                    id: contactInfo.email,
                     email: contactInfo.email,
-                    fullName: contactInfo.fullName
-                })
-            });
+                    name: contactInfo.fullName,
+                    // Quiz answers
+                    quiz_answer_1: this.answers[1] || '',
+                    quiz_answer_2: this.answers[2] || '',
+                    quiz_answer_3: this.answers[3] || '',
+                    quiz_answer_4: this.answers[4] || '',
+                    quiz_answer_5: this.answers[5] || '',
+                    // Recommendations
+                    primary_product_recommendation: this.recommendation.primary,
+                    secondary_product_recommendation: this.recommendation.secondary,
+                    recommendation_reasoning: this.recommendation.reasoning,
+                    // Metadata
+                    quiz_completed_at: new Date().toISOString(),
+                    quiz_version: '1.0',
+                    lead_source: 'trt_quiz'
+                });
 
-            const result = await response.json();
+                // Track quiz completion event
+                _cio.track('quiz_completed', {
+                    quiz_type: 'trt_assessment',
+                    primary_recommendation: this.recommendation.primary,
+                    secondary_recommendation: this.recommendation.secondary,
+                    total_questions: 5,
+                    completed_at: new Date().toISOString()
+                });
 
-            if (response.ok && result.success) {
-                // Success - data sent to Customer.io and segmentation triggered
-                console.log('Quiz successfully submitted:', result);
+                console.log('Successfully sent data to Customer.io');
                 
                 // Store the user's name for personalization
                 this.userName = contactInfo.fullName;
@@ -253,32 +268,16 @@ class TRTQuiz {
                 // Show the recommendation section
                 this.showRecommendationSection();
                 
-                // Track successful submission
-                console.log('Customer created/updated in Customer.io:', result.customerId);
-                console.log('Recommendation:', result.recommendation);
-                
             } else {
-                throw new Error(result.error || 'Submission failed');
+                throw new Error('Customer.io tracking script not loaded');
             }
 
         } catch (error) {
-            console.error('Quiz submission error:', error);
+            console.error('Error sending to Customer.io:', error);
             
-            // For now, still show the recommendation section even if API fails
-            // This allows testing the frontend functionality while API is being configured
-            console.log('API submission failed, but continuing with frontend functionality...');
-            
-            // Store the user's name for personalization
+            // Still show recommendations even if tracking fails
             this.userName = contactInfo.fullName;
-            
-            // Show the recommendation section anyway
             this.showRecommendationSection();
-            
-            // Optional: Show a subtle message that the data will be saved later
-            // (You can remove this once the API is fully configured)
-            setTimeout(() => {
-                console.log('Note: Quiz data saved locally. Backend integration in progress.');
-            }, 1000);
             
         } finally {
             // Reset button state
