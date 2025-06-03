@@ -215,8 +215,19 @@ class TRTQuiz {
         try {
             // Send directly to Customer.io using their JavaScript SDK
             if (typeof _cio !== 'undefined') {
-                // Identify the customer
-                _cio.identify({
+                // Debug: Log the actual answers before sending
+                console.log('Debug - Raw answers object:', this.answers);
+                console.log('Debug - Individual answers:', {
+                    answer1: this.answers[1],
+                    answer2: this.answers[2], 
+                    answer3: this.answers[3],
+                    answer4: this.answers[4],
+                    answer5: this.answers[5]
+                });
+                console.log('Debug - Recommendation object:', this.recommendation);
+                
+                // Prepare the data object
+                const customerData = {
                     id: contactInfo.email,
                     email: contactInfo.email,
                     name: contactInfo.fullName,
@@ -233,7 +244,13 @@ class TRTQuiz {
                     quiz_completed_at: new Date().toISOString(),
                     quiz_version: '1.0',
                     lead_source: 'trt_quiz'
-                });
+                };
+                
+                // Debug: Log the final data being sent to Customer.io
+                console.log('Debug - Data being sent to Customer.io:', customerData);
+                
+                // Identify the customer
+                _cio.identify(customerData);
 
                 // Track quiz completion event
                 _cio.track('quiz_completed', {
