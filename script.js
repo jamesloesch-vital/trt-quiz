@@ -220,36 +220,15 @@ class TRTQuiz {
                     id: contactInfo.email,
                     email: contactInfo.email,
                     name: contactInfo.fullName,
-                    // Quiz answers in from/to format
-                    quiz_answer_1: {
-                        from: '',
-                        to: this.answers[1] || ''
-                    },
-                    quiz_answer_2: {
-                        from: '',
-                        to: this.answers[2] || ''
-                    },
-                    quiz_answer_3: {
-                        from: '',
-                        to: this.answers[3] || ''
-                    },
-                    quiz_answer_4: {
-                        from: '',
-                        to: this.answers[4] || ''
-                    },
-                    quiz_answer_5: {
-                        from: '',
-                        to: this.answers[5] || ''
-                    },
-                    // Recommendations in from/to format
-                    primary_product_recommendation: {
-                        from: '',
-                        to: this.recommendation.primary || ''
-                    },
-                    recommendation_reasoning: {
-                        from: '',
-                        to: this.recommendation.reasoning || ''
-                    },
+                    // Quiz answers as direct string values
+                    quiz_answer_1: this.answers[1] || '',
+                    quiz_answer_2: this.answers[2] || '',
+                    quiz_answer_3: this.answers[3] || '',
+                    quiz_answer_4: this.answers[4] || '',
+                    quiz_answer_5: this.answers[5] || '',
+                    // Recommendations as direct string values
+                    primary_product_recommendation: this.recommendation.primary || '',
+                    recommendation_reasoning: this.recommendation.reasoning || '',
                     // Metadata
                     quiz_completed_at: new Date().toISOString(),
                     quiz_version: '1.0',
