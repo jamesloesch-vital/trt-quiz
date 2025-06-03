@@ -303,6 +303,16 @@ html {
     box-shadow: 0 0 0 3px rgba(144, 99, 35, 0.2);
 }
 
+.phone-field-description {
+    font-family: 'LT Superior', sans-serif;
+    font-size: 14px;
+    color: #666666;
+    text-align: left;
+    margin: -1rem 0 1rem 0;
+    line-height: 1.4;
+    font-style: italic;
+}
+
 .form-submit-btn {
     background-color: #906323;
     color: white;
@@ -332,6 +342,12 @@ html {
 .form-submit-btn:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(144, 99, 35, 0.3);
+}
+
+.form-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .skip-discount-link {

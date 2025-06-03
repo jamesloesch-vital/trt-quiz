@@ -200,6 +200,7 @@ class TRTQuiz {
         const contactInfo = {
             fullName: formData.get('fullName'),
             email: formData.get('email'),
+            phoneNumber: formData.get('phoneNumber') || '', // Optional field, default to empty string
             answers: this.answers,
             recommendation: this.recommendation
         };
@@ -220,6 +221,7 @@ class TRTQuiz {
                     id: contactInfo.email,
                     email: contactInfo.email,
                     name: contactInfo.fullName,
+                    phone: contactInfo.phoneNumber, // Send phone number as string
                     // Quiz answers as simple strings (not objects)
                     quiz_answer_1: this.answers[1] || '',
                     quiz_answer_2: this.answers[2] || '',
@@ -240,7 +242,8 @@ class TRTQuiz {
                     quiz_type: 'trt_assessment',
                     primary_recommendation: this.recommendation.primary,
                     total_questions: 5,
-                    completed_at: new Date().toISOString()
+                    completed_at: new Date().toISOString(),
+                    phone_provided: contactInfo.phoneNumber ? 'yes' : 'no' // Track if phone was provided
                 });
 
                 console.log('Successfully sent data to Customer.io');
